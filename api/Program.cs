@@ -1,5 +1,10 @@
 using api.Data;
+using dotenv.net;
 using Microsoft.EntityFrameworkCore;
+
+DotEnv.Load();
+
+var env = DotEnv.Read();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +17,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+    options.UseSqlServer(env["DB_CONNSTR"]);
 });
 
 var app = builder.Build();
